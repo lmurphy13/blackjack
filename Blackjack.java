@@ -28,6 +28,9 @@ public class Blackjack {
 
 	}
 
+	
+
+
 
 	public void play(Player dealer, Player[] players) {
 		/* Standard 52 card deck */
@@ -44,34 +47,17 @@ public class Blackjack {
 			
 			/* Let each player take their turn */
 			for(Player player : players) {
-				System.out.printf("Player %d has hand: %s\n", player.getId(), player
-				if(!player.getHand.get(1).equals("ACE")) {
-					if(player.getHand.get(1).getNum() < 10) {
-						player.giveCard(hit());
+				System.out.printf("Player %d has hand: %s\n", player.getId(), player);
+				if(!player.getHand().get(1).equals("ACE")) {
+					if(player.getHand().get(1).getNum() < 10) {
+						try {
+							player.giveCard(deck.dealCard());
+						} catch(Exception e) {
+							System.err.print(e);
+						}
 					}
 				}
-
 			}
-
-
-
-
-
-
-
 		}
-
-		private void hit() {
-			deck.dealCard();
-		}
-
-		private void stay() {
-			continue;
-		}
-
-		private void 
-
-	}	
-
-
+	}
 }

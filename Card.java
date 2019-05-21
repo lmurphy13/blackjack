@@ -34,6 +34,7 @@ public class Card {
 			this.value.equals("QUEEN") || this.value.equals("KING")) {
 			return 10;
 		}
+		return 0;
 	}
 
 	public String getSuit() {
