@@ -52,7 +52,17 @@ public class Player {
 	}
 
 	public int getHandTotal() {
-		
+		int total = 0;
+		for(Card c : hand) {
+			if(!c.getValue().equals("ACE")) {
+				total += c.getNum();
+			} else if(total <= (21 - 11) && c.getValue().equals("ACE")) {
+				total += 11;
+			} else if(total > (21 - 11) && c.getValue().equals("ACE")) {
+				total += 1;
+			}
+		}
+		return total;
 	}
 
 	public void setHand(ArrayList<Card> hand) {

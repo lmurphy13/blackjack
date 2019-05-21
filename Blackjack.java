@@ -44,9 +44,12 @@ public class Blackjack {
 			
 			/* Let each player take their turn */
 			for(Player player : players) {
-
-
-
+				System.out.printf("Player %d has hand: %s\n", player.getId(), player
+				if(!player.getHand.get(1).equals("ACE")) {
+					if(player.getHand.get(1).getNum() < 10) {
+						player.giveCard(hit());
+					}
+				}
 
 			}
 
@@ -58,7 +61,15 @@ public class Blackjack {
 
 		}
 
+		private void hit() {
+			deck.dealCard();
+		}
 
+		private void stay() {
+			continue;
+		}
+
+		private void 
 
 	}	
 
