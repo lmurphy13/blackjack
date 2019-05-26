@@ -79,7 +79,7 @@ public class Deck {
 		// }
 
 		for(int i = 0; i < 52; i++) {
-			try { deck.dealCard(); } catch(Exception e) { e.printStackTrace(); }
+			try { System.out.println(deck.dealCard()); } catch(Exception e) { e.printStackTrace(); }
 			System.out.println("dealt card");
 		}
 

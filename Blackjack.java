@@ -1,9 +1,13 @@
 public class Blackjack {
-	
 	public static final int MAXPLAYERS = 5;
+
+	private Player dealer;
+	private Player[] players;
+
 
 	public static void main(String[] args) {
 		Blackjack game = new Blackjack();
+		game.play(game.getDealer(), game.getPlayers());
 
 	}
 
@@ -14,8 +18,8 @@ public class Blackjack {
 
 		/* Other players have ID 1 - MAXPLAYERS */
 		Player[] players = new Player[MAXPLAYERS];
-		for(int i = 1; i <= MAXPLAYERS; i++) {
-			players[i - 1] = new Player(i);
+		for(int i = 0; i < MAXPLAYERS; i++) {
+			players[i] = new Player(i);
 		}
 
 		dealer.setBank(20);
@@ -28,17 +32,24 @@ public class Blackjack {
 
 	}
 
-	
-
-
+	public Player getDealer() { return this.dealer; }
+	public Player[] getPlayers() { return this.players; }
 
 	public void play(Player dealer, Player[] players) {
 		/* Standard 52 card deck */
 		Deck deck = new Deck();
 		deck.shuffle();
 
-		for(Player player : players) {
-			try { player.giveCard(deck.dealCard()); } catch(Exception e) {e.printStackTrace();}
+		// for(Player player : this.players) {
+		// 	try { player.giveCard(deck.dealCard()); } catch(Exception e) {e.printStackTrace();}
+		// }
+
+		for (int i = 0; i < MAXPLAYERS; i++) {
+			try {
+				this.players[i].giveCard(deck.dealCard());
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 
 		/* Play until dealer has no more money */
