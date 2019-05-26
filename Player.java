@@ -14,7 +14,7 @@ public class Player {
 	}
 
 	public String toString() {
-		String str = String.format("Player %d has $%.2f and is betting $%.2f. Their hand total is: %d.", 
+		String str = String.format("Player %d has $%.2f.\nBet: $%.2f\nHand total: $%.2f.", 
 			this.id, this.bank, this.bet, this.hand);
 		return str;
 	}
@@ -67,6 +67,24 @@ public class Player {
 
 	public void setHand(ArrayList<Card> hand) {
 		this.hand = hand;
+	}
+
+	public static void main(String[] args) {
+		Deck deck = new Deck();
+		deck.shuffle();
+
+		Player p1 = new Player(1);
+
+		try {
+			p1.giveCard(deck.dealCard());
+			p1.giveCard(deck.dealCard());
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+
+		System.out.println(p1.getHand());
+
+
 	}
 
 }
