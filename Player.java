@@ -69,6 +69,10 @@ public class Player {
 		this.hand = hand;
 	}
 
+	public void clearHand() {
+		this.hand.clear();
+	}
+
 	public static void main(String[] args) {
 		Deck deck = new Deck();
 		deck.shuffle();

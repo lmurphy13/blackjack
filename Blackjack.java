@@ -14,7 +14,7 @@ public class Blackjack {
 		String response;
 		while(playAgain) {
 			game.play();
-			System.out.print("Would you like to play again?: (y/n)");
+			System.out.print("Would you like to play again?: (y/n) ");
 			response = in.next();
 
 			if(response.equals("n"))
@@ -43,6 +43,9 @@ public class Blackjack {
 		/* Standard 52 card deck */
 		Deck deck = new Deck();
 		deck.shuffle();
+
+		dealer.clearHand();
+		player.clearHand();
 
 		try {
 			dealer.giveCard(deck.dealCard());
@@ -84,26 +87,13 @@ public class Blackjack {
 					player.setBank(player.getBank() + player.getBet());
 					System.out.printf("You win! Your bank is now: $%.2f.\n", player.getBank());
 					break;
+				} else if(player.getHandTotal() > 21) {
+					player.setBank(player.getBank() - player.getBet());
+					System.out.printf("You bust! Your bank is now: $%.2f.\n", player.getBank());
+					break;
 				}
 
-				if(dealer.getHandTotal() >= 15) {
-					if(dealer.getHandTotal() == 21) {
-						System.out.println("The dealer's hand is: " + dealer.getHand() + ". The dealer wins!");
-						player.setBank(player.getBank() - player.getBet());
-						System.out.printf("Your bank is now: $%.2f.\n", player.getBank());
-						break;
-					} else {
-						System.out.println("The dealer stays.");
-					}
-
-				} else {
-					try {
-						dealer.giveCard(deck.dealCard());
-					} catch(Exception e) {
-						e.printStackTrace();
-					}
-					System.out.println("The dealer was delt a card.");
-				}
+				
 
 
 			} else if(selection == 2) {
@@ -111,25 +101,38 @@ public class Blackjack {
 					player.setBank(player.getBank() + player.getBet());
 					System.out.printf("You win! Your bank is now: $%.2f.\n", player.getBank());
 					break;
+				} else {
+					System.out.println("You chose to stay. Your hand is: " + player.getHand() + " and has a total of: " + player.getHandTotal());
 				}
 
-				if(dealer.getHandTotal() >= 15) {
-					if(dealer.getHandTotal() == 21) {
-						System.out.println("The dealer's hand is: " + dealer.getHand() + ". The dealer wins!");
-						player.setBank(player.getBank() - player.getBet());
-						System.out.printf("Your bank is now: $%.2f.\n", player.getBank());
-						break;
-					} else {
-						System.out.println("The dealer stays.");
-					}
-
+				System.out.println("The dealer's hand is: " + dealer.getHand());
+				
+				if(dealer.getHandTotal() > player.getHandTotal()) {
+					player.setBank(player.getBank() - player.getBet());
+					System.out.printf("You lose! Your bank is now: $%.2f.\n", player.getBank());
 				} else {
-					try {
-						dealer.giveCard(deck.dealCard());
-					} catch(Exception e) {
-						e.printStackTrace();
-					}					
-					System.out.println("The dealer was delt a card.");
+					while(dealer.getHandTotal() < 17) {
+						try {
+							dealer.giveCard(deck.dealCard());
+							System.out.println("The dealer hits. The dealer's hand is: " + dealer.getHand());
+						} catch(Exception e) {
+							e.printStackTrace();
+						}
+
+						if(dealer.getHandTotal() > player.getHandTotal()) {
+							player.setBank(player.getBank() - player.getBet());
+							System.out.printf("The dealer wins! Your bank is now: $%.2f.\n", player.getBank());
+							break;
+						} else if(dealer.getHandTotal() == 21) {
+							player.setBank(player.getBank() - player.getBet());
+							System.out.printf("The dealer wins! Your bank is now: $%.2f.\n", player.getBank());
+							break;
+						} else if(dealer.getHandTotal() > 21) {
+							player.setBank(player.getBank() + player.getBet());
+							System.out.printf("You win! Your bank is now: $%.2f.\n", player.getBank());
+							break;
+						}
+					}
 				}
 			}
 		}
