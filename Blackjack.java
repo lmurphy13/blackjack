@@ -13,6 +13,7 @@ public class Blackjack {
 		Boolean playAgain = true;
 		String response;
 		while(playAgain) {
+			clearScreen();
 			game.play();
 			System.out.print("Would you like to play again?: (y/n) ");
 			response = in.next();
@@ -31,9 +32,15 @@ public class Blackjack {
 		/* One player configuration */
 		player = new Player(1);
 
-		player.setBank(20);
+		player.setBank(100);
 
 
+	}
+
+	public static void clearScreen() {
+		for(int i = 0; i < 40; i++) {
+			System.out.println();
+		}
 	}
 
 	public void play() {
@@ -105,21 +112,27 @@ public class Blackjack {
 					System.out.println("You chose to stay. Your hand is: " + player.getHand() + " and has a total of: " + player.getHandTotal());
 				}
 
-				System.out.println("The dealer's hand is: " + dealer.getHand());
+				System.out.println("The dealer's hand is: " + dealer.getHand() + " and has a total of: " + dealer.getHandTotal());
 				
 				if(dealer.getHandTotal() > player.getHandTotal()) {
 					player.setBank(player.getBank() - player.getBet());
 					System.out.printf("You lose! Your bank is now: $%.2f.\n", player.getBank());
+					break;
 				} else {
-					while(dealer.getHandTotal() < 17) {
+					while(dealer.getHandTotal() < 21) {
 						try {
 							dealer.giveCard(deck.dealCard());
-							System.out.println("The dealer hits. The dealer's hand is: " + dealer.getHand());
+							System.out.println("The dealer hits. The dealer's hand is: " + dealer.getHand() + " and has a total of: " + dealer.getHandTotal());
 						} catch(Exception e) {
 							e.printStackTrace();
 						}
 
-						if(dealer.getHandTotal() > player.getHandTotal()) {
+
+						if(dealer.getHandTotal() > 21) {
+							player.setBank(player.getBank() + player.getBet());
+							System.out.printf("You win! Your bank is now: $%.2f.\n", player.getBank());
+							break;
+						} else if(dealer.getHandTotal() > player.getHandTotal()) {
 							player.setBank(player.getBank() - player.getBet());
 							System.out.printf("The dealer wins! Your bank is now: $%.2f.\n", player.getBank());
 							break;
@@ -127,12 +140,9 @@ public class Blackjack {
 							player.setBank(player.getBank() - player.getBet());
 							System.out.printf("The dealer wins! Your bank is now: $%.2f.\n", player.getBank());
 							break;
-						} else if(dealer.getHandTotal() > 21) {
-							player.setBank(player.getBank() + player.getBet());
-							System.out.printf("You win! Your bank is now: $%.2f.\n", player.getBank());
-							break;
 						}
 					}
+					break;
 				}
 			}
 		}
